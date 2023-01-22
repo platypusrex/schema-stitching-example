@@ -1,7 +1,7 @@
 # schema-stitching-example
 
 This is a playground for testing graphql microservice architectural pattern. 
-It utilizes schema stitching (created and maintained by (The Guild)[https://the-guild.dev/])
+It utilizes schema stitching (created and maintained by [The Guild](https://the-guild.dev/))
 to create a single GraphQL gateway schema from multiple underlying GraphQL services or subgraphs. 
 The solution itself is fairly comparable to Apollo Federation automated query planning, merged types,
 and declarative schema directives.
