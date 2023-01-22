@@ -1,20 +1,34 @@
-# Turborepo starter
+# schema-stitching-example
 
-This is an official Yarn v1 starter turborepo.
+This is a playground for testing graphql microservice architectural pattern. 
+It utilizes schema stitching (created and maintained by (The Guild)[https://the-guild.dev/])
+to create a single GraphQL gateway schema from multiple underlying GraphQL services or subgraphs. 
+The solution itself is fairly comparable to Apollo Federation automated query planning, merged types,
+and declarative schema directives.
+
+**Note:**
+There are a mix of services here using both stitches and federated schemas. The gateway is capable of
+converting any federated sdl to a stitched sdl. Both the stitched and federated schema services are 
+extending/merging types and resolving fields for one another.
 
 ## What's inside?
 
-This turborepo uses [Yarn](https://classic.yarnpkg.com/lang/en/) as a package manager. It includes the following packages/apps:
+### Packages
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `base-server`: shared apollo server
+- `custom-scalars`: shared graphQL scalars
+- `http-datasource`: a wrapper around apollo-http-datasource
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Apps
+
+- `band-service`: microservice with stitched schema
+- `fan-service`: microservice with federated schema
+- `genre-service`: microservice with stitched schema
+- `instrument-service`: microservice with stitched schema
+- `musician-service`: microservice with stitched schema
+- `gateway`: proxy responsible for stitching together and creating single schema from all subgraphs 
 
 ### Utilities
 
@@ -24,16 +38,11 @@ This turborepo has some additional tools already setup for you:
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
 
-## Setup
-
-This repository is used in the `npx create-turbo` command, and selected when choosing which package manager you wish to use with your monorepo (Yarn).
-
 ### Build
 
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
 yarn run build
 ```
 
@@ -42,36 +51,13 @@ yarn run build
 To develop all apps and packages, run the following command:
 
 ```
-cd my-turborepo
 yarn run dev
 ```
 
-### Remote Caching
+### Generate
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+To generate graphQL types for all services, run the following command:
 
 ```
-cd my-turborepo
-npx turbo login
+yarn run generate
 ```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
-- [Caching](https://turborepo.org/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
