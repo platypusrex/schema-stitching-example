@@ -7,7 +7,7 @@ The solution itself is fairly comparable to Apollo Federation automated query pl
 and declarative schema directives.
 
 **Note:**
-There are a mix of services here using both stitches and federated schemas. The gateway is capable of
+There are a mix of services here using both stitched and federated schemas. The gateway is capable of
 converting any federated sdl to a stitched sdl. Both the stitched and federated schema services are 
 extending/merging types and resolving fields for one another.
 
