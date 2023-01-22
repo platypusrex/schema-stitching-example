@@ -1,0 +1,33 @@
+scalar Date
+
+type Musician {
+  id: ID!
+  name: String!
+  createdAt: Date!
+  updatedAt: Date!
+  _instrumentIds: [String!]
+}
+
+type Band @key(selectionSet: "{ _musicianIds }"){
+  musicians: [Musician!]
+}
+
+input AddMusicianInput {
+  name: String!
+}
+
+input AddMusicianInstrumentInput {
+  musicianId: ID!
+  instrumentIds: [ID!]!
+}
+
+type Query {
+  musicians: [Musician!]
+  _musicians(ids: [ID!]!): Band @merge(keyField: "_musicianIds")
+}
+
+type Mutation {
+  addMusician(input: AddMusicianInput!): Musician
+  addMusicianInstruments(input: AddMusicianInstrumentInput!): Musician
+}
+

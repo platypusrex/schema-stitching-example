@@ -1,0 +1,34 @@
+scalar Date
+
+type Instrument {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  name: String!
+  family: InstrumentFamily!
+}
+
+enum InstrumentFamily {
+  PERCUSSION
+  WIND
+  STRING
+  ELECTRONIC
+}
+
+type Musician @key(selectionSet: "{ _instrumentIds }") {
+  instruments: [Instrument!]
+}
+
+input AddInstrumentInput {
+  name: String!
+  family: InstrumentFamily!
+}
+
+type Query {
+  instruments: [Instrument!]
+  _instruments(ids: [ID!]!): Musician @merge(keyField: "_instrumentIds")
+}
+
+type Mutation {
+  addInstrument(input: AddInstrumentInput!): Instrument
+}

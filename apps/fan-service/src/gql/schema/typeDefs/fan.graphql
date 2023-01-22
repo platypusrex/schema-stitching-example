@@ -1,0 +1,14 @@
+type Fan @key(fields: "id") {
+  id: ID!
+  name: String!
+  _bandIds: [ID!]!
+}
+
+extend type Band @key(fields: "id") {
+  id: ID! @external
+  fans: [Fan!]
+}
+
+type Query {
+  fan(id: ID!): Fan
+}

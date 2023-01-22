@@ -1,0 +1,25 @@
+scalar Date
+
+type Genre {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  name: String!
+}
+
+type Band @key(selectionSet: "{ _genreIds }") {
+  genres: [Genre!]
+}
+
+input AddGenreInput {
+  name: String!
+}
+
+type Query {
+  genres: [Genre!]
+  _genres(ids: [ID!]!): Band @merge(keyField: "_genreIds")
+}
+
+type Mutation {
+  addGenre(input: AddGenreInput!): Genre
+}

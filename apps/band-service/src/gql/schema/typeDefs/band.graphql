@@ -1,0 +1,55 @@
+scalar Date
+
+type Band {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  name: String!
+  yearEstablished: String
+  yearDisbanded: String
+  _musicianIds: [ID!]
+  _genreIds: [ID!]
+}
+
+type Fan @key(selectionSet: "{ _bandIds }") {
+  bands: [Band!]
+}
+
+type Musician @key(selectionSet: "{ id }") {
+  id: ID!
+  bands: [Band!]
+}
+
+type Genre @key(selectionSet: "{ id }") {
+  id: ID!
+  bands: [Band!]
+}
+
+input AddBandInput {
+  name: String!
+  yearEstablished: String
+  yearDisbanded: String
+}
+
+input AddBandMemberInput {
+  bandId: ID!
+  memberId: ID!
+}
+
+input AddBandGenreInput {
+  bandId: ID!
+  genreId: ID!
+}
+
+type Query {
+  bands: [Band!]
+  _bands(ids: [ID!]!): Fan @merge(keyField: "_bandIds")
+  _musicianBands(id: ID!): Musician @merge(keyField: "id")
+  _genreBands(id: ID!): Genre @merge(keyField: "id")
+}
+
+type Mutation {
+  addBand(input: AddBandInput!): Band
+  addBandMember(input: AddBandMemberInput!): Band
+  addBandGenre(input: AddBandGenreInput!): Band
+}

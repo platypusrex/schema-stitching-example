@@ -1,0 +1,25 @@
+{
+  "name": "custom-scalars",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "author": "Frank Cooke",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --outDir 'build' --declaration --declarationMap",
+    "lint": "eslint src/**/*.ts*"
+  },
+  "peerDependencies": {
+    "graphql": ">=16"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "graphql": "^16.6.0",
+    "tsconfig": "*",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@apollo/federation": "0.20.6"
+  }
+}

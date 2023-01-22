@@ -2,15 +2,23 @@
   "name": "schema-stiching-2",
   "version": "0.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@prisma/client",
+      "**/@prisma/client/**"
+    ]
+  },
   "scripts": {
     "build": "turbo run build",
+    "start": "turbo run start --parallel",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "generate": "turbo run generate --parallel"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
@@ -22,5 +30,8 @@
     "node": ">=14.0.0"
   },
   "dependencies": {},
-  "packageManager": "yarn@1.22.17"
+  "packageManager": "yarn@1.22.17",
+  "resolutions": {
+    "graphql": "16.6.0"
+  }
 }

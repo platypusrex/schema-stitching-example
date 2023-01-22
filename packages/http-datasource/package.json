@@ -1,0 +1,21 @@
+{
+  "name": "http-datasource",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "author": "Frank Cooke",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint src/**/*.ts*"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "typescript": "^4.7.4",
+    "tsconfig": "*"
+  },
+  "dependencies": {
+    "apollo-datasource-http": "^0.21.0",
+    "dataloader": "^2.1.0"
+  }
+}
