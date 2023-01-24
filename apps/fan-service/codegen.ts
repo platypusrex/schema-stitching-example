@@ -9,9 +9,8 @@ const config: CodegenConfig = {
       config: {
         federation: true,
         useIndexSignature: true,
-        mappers: {
-          _Service: 'any'
-        }
+        contextType: './context#Context',
+        mappers: { _Service: 'any' }
       },
       plugins: [
         {

@@ -30,12 +30,11 @@ export type Instrument = {
   updatedAt: Scalars['Date'];
 };
 
-export enum InstrumentFamily {
-  Electronic = 'ELECTRONIC',
-  Percussion = 'PERCUSSION',
-  String = 'STRING',
-  Wind = 'WIND'
-}
+export type InstrumentFamily =
+  | 'ELECTRONIC'
+  | 'PERCUSSION'
+  | 'STRING'
+  | 'WIND';
 
 export type Musician = {
   __typename?: 'Musician';

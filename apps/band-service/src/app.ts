@@ -8,6 +8,7 @@ import { schema } from "./gql/schema";
 import { createDb } from "./db";
 import { BandDataSource } from "./gql/datasources";
 
+// eslint-disable-next-line turbo/no-undeclared-env-vars
 const PORT = Number(process.env.PORT) || 4002;
 const SERVICE_NAME = "band-service";
 

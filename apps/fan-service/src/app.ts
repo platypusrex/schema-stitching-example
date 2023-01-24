@@ -6,11 +6,18 @@ import {
   ApolloServerPluginLandingPageLocalDefault
 } from 'apollo-server-core';
 import { schema } from './gql/schema';
+import { createDb } from './db';
+import { FanDataSource } from './gql/datasources';
+
+// eslint-disable-next-line turbo/no-undeclared-env-vars
+const PORT = Number(process.env.PORT) || 4005;
+const SERVICE_NAME = "fan-service";
 
 (async function() {
+  const db = await createDb();
   await createServer({
-    port: 4005,
-    name: 'fan-service',
+    port: PORT,
+    name: SERVICE_NAME,
     server: (httpServer) => new ApolloServer({
       schema: buildFederatedSchema(schema),
       csrfPrevention: true,
@@ -19,6 +26,9 @@ import { schema } from './gql/schema';
         ApolloServerPluginDrainHttpServer({ httpServer }),
         ApolloServerPluginLandingPageLocalDefault({ embed: true }),
       ],
+      dataSources: () => ({
+        fanDataSource: new FanDataSource(db),
+      }),
     }),
   });
 })()

@@ -9,6 +9,16 @@ extend type Band @key(fields: "id") {
   fans: [Fan!]
 }
 
+input AddFanInput {
+  name: String!
+  bandIds: [ID!]!
+}
+
 type Query {
+  fans: [Fan!]
   fan(id: ID!): Fan
+}
+
+type Mutation {
+  addFan(input: AddFanInput!): Fan
 }

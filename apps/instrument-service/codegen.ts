@@ -8,6 +8,7 @@ const config: CodegenConfig = {
     'src/typings/resolvers.ts': {
       config: {
         contextType: './context#Context',
+        enumsAsTypes: true,
         scalars: {
           Date: 'Date',
         }

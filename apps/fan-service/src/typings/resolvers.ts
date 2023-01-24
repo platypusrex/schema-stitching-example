@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { Context } from './context';
 type Query_EntitiesArgs = any
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -16,6 +17,11 @@ export type Scalars = {
   _Any: any;
 };
 
+export type AddFanInput = {
+  bandIds: Array<Scalars['ID']>;
+  name: Scalars['String'];
+};
+
 export type Band = {
   __typename?: 'Band';
   fans?: Maybe<Array<Fan>>;
@@ -29,9 +35,20 @@ export type Fan = {
   name: Scalars['String'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addFan?: Maybe<Fan>;
+};
+
+
+export type MutationAddFanArgs = {
+  input: AddFanInput;
+};
+
 export type Query = {
   __typename?: 'Query';
   fan?: Maybe<Fan>;
+  fans?: Maybe<Array<Fan>>;
 };
 
 
@@ -109,10 +126,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  AddFanInput: AddFanInput;
   Band: ResolverTypeWrapper<Band>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Fan: ResolverTypeWrapper<Fan>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
   _Any: ResolverTypeWrapper<Scalars['_Any']>;
@@ -122,10 +141,12 @@ export type ResolversTypes = ResolversObject<{
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  AddFanInput: AddFanInput;
   Band: Band;
   Boolean: Scalars['Boolean'];
   Fan: Fan;
   ID: Scalars['ID'];
+  Mutation: {};
   Query: {};
   String: Scalars['String'];
   _Any: Scalars['_Any'];
@@ -135,49 +156,55 @@ export type ResolversParentTypes = ResolversObject<{
 
 export type ExtendsDirectiveArgs = { };
 
-export type ExtendsDirectiveResolver<Result, Parent, ContextType = any, Args = ExtendsDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+export type ExtendsDirectiveResolver<Result, Parent, ContextType = Context, Args = ExtendsDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type BandResolvers<ContextType = any, ParentType extends ResolversParentTypes['Band'] = ResolversParentTypes['Band']> = ResolversObject<{
+export type BandResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Band'] = ResolversParentTypes['Band']> = ResolversObject<{
   fans?: Resolver<Maybe<Array<ResolversTypes['Fan']>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type FanResolvers<ContextType = any, ParentType extends ResolversParentTypes['Fan'] = ResolversParentTypes['Fan']> = ResolversObject<{
+export type FanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Fan'] = ResolversParentTypes['Fan']> = ResolversObject<{
   _bandIds?: Resolver<Array<ResolversTypes['ID']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addFan?: Resolver<Maybe<ResolversTypes['Fan']>, ParentType, ContextType, RequireFields<MutationAddFanArgs, 'input'>>;
+}>;
+
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   _entities?: Resolver<Array<Maybe<ResolversTypes['_Entity']>>, ParentType, ContextType, RequireFields<Query_EntitiesArgs, 'representations'>>;
   _service?: Resolver<ResolversTypes['_Service'], ParentType, ContextType>;
   fan?: Resolver<Maybe<ResolversTypes['Fan']>, ParentType, ContextType, RequireFields<QueryFanArgs, 'id'>>;
+  fans?: Resolver<Maybe<Array<ResolversTypes['Fan']>>, ParentType, ContextType>;
 }>;
 
 export interface _AnyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['_Any'], any> {
   name: '_Any';
 }
 
-export type _EntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['_Entity'] = ResolversParentTypes['_Entity']> = ResolversObject<{
+export type _EntityResolvers<ContextType = Context, ParentType extends ResolversParentTypes['_Entity'] = ResolversParentTypes['_Entity']> = ResolversObject<{
   __resolveType: TypeResolveFn<'Band' | 'Fan', ParentType, ContextType>;
 }>;
 
-export type _ServiceResolvers<ContextType = any, ParentType extends ResolversParentTypes['_Service'] = ResolversParentTypes['_Service']> = ResolversObject<{
+export type _ServiceResolvers<ContextType = Context, ParentType extends ResolversParentTypes['_Service'] = ResolversParentTypes['_Service']> = ResolversObject<{
   sdl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type Resolvers<ContextType = any> = ResolversObject<{
+export type Resolvers<ContextType = Context> = ResolversObject<{
   Band?: BandResolvers<ContextType>;
   Fan?: FanResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   _Any?: GraphQLScalarType;
   _Entity?: _EntityResolvers<ContextType>;
   _Service?: _ServiceResolvers<ContextType>;
 }>;
 
-export type DirectiveResolvers<ContextType = any> = ResolversObject<{
+export type DirectiveResolvers<ContextType = Context> = ResolversObject<{
   extends?: ExtendsDirectiveResolver<any, any, ContextType>;
 }>;
